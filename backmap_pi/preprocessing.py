@@ -18,3 +18,4 @@ def load(f_name=True):
     xyz : np.array,
         Array with shape (n_atoms, 3) of x,y,z positions of all the atoms
     """
+    pass
