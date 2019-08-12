@@ -4,7 +4,8 @@ Backmapping for pi-conjugated peptides
 """
 
 # Add imports here
-from .backmap_pi import *
+from .backmapping import *
+from .preprocessing import *
 
 # Handle versioneer
 from ._version import get_versions
