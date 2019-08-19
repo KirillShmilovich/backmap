@@ -8,5 +8,9 @@ import pytest
 import sys
 
 def test_backmap_pi_imported():
-    """Sample test, will always pass so long as import statement worked"""
-    assert "backmap_pi" in sys.modules
+    line_list = backmap_pi.load("./backmap_pi/tests/after_md_nowater.gro")
+
+def test_molecule_check():
+    """ Should have 96 molecules"""
+    line_list = backmap_pi.load("./backmap_pi/tests/after_md_nowater.gro")
+    assert len(line_list)==2787
