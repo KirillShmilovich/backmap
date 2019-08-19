@@ -3,7 +3,7 @@
 # Functions for preprocessing files
 # """
 
-#________________ THING 11 -- final preprocessing script -- Olivia's version of code at end _____________#
+#________________ final preprocessing script -- Olivia's version of code at end _____________#
 
 # this function loads the .gro file for the system
 
@@ -18,7 +18,7 @@ def load(f_name):
 #### in each molecule's dictionary, each residue is a key with the value being a dictionary with each bead in that residue as a key
 #### the value of each bead key is a list of the x, y, z positions
 
-def thing11(file_name):
+def make_molecule_dictionary(file_name):
     rows = load(file_name)
     allmols = []        # this is going to be a list containing lists of all the molecules (with their residue lines)
     mol = []            # list containing residue lines for an individual molecule
@@ -77,26 +77,20 @@ def thing11(file_name):
                 molecule_dict[res_name][bead_name+"_"+str(res_count)] = [x,y,z]       # make the bead name a key in the dictionary with the value [x position, y position, z position]
                 total_beads_in_residue_list.append(residue_line[0])     # here you know you're appending the residue name not the bead name so you can reference it later
                 res_count += 1
-                #print(total_beads_in_residue_list[0])
-                #print(total_beads_in_residue_list)
-                #print(molecule_dict)
             elif len(total_beads_in_residue_list) != 0 and residue_line[0] == total_beads_in_residue_list[0]:
                 molecule_dict[res_name][bead_name+"_"+str(res_count)] = [x,y,z]
                 total_beads_in_residue_list.append(residue_line[0])
                 res_count += 1
-                #count += 1
-                #print(molecule_dict)
             elif len(total_beads_in_residue_list) != 0 and residue_line[0] != total_beads_in_residue_list[0]:
                 total_beads_in_residue_list = []
                 molecule_dict[res_name] = dict()             # make the bead name a key in the dictionary
                 molecule_dict[res_name][bead_name+"_"+str(res_count)] = [x,y,z]
                 total_beads_in_residue_list.append(residue_line[0])
                 res_count += 1
-                #count = 0
         print(molecule_dict)
     return molecule
 
-# # #________________ THING 10 -- final preprocessing script -- Kirill's version of code at end _____________#
+# # #________________ final preprocessing script -- Kirill's version of code at end _____________#
 # def load(f_name):
 #     line_list = list()
 #     with open(f_name) as f:
@@ -104,7 +98,7 @@ def thing11(file_name):
 #             line_list.append(line.split())
 #     return line_list
 
-# def thing10(file_name):
+# def make_molecule_dictionary(file_name):
 #     rows = load(file_name)
 #     allmols = []        # this is going to be a list containing lists of all the molecules (with their residue lines)
 #     mol = []            # list containing residue lines for an individual molecule
