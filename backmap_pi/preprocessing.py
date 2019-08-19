@@ -3,6 +3,104 @@
 # Functions for preprocessing files
 # """
 
+import numpy as np
+import re
+
+def load_file(f_name):
+    line_list = list()
+    with open(f_name) as f:
+        for line in f:
+            line_list.append(line.split())
+    return line_list
+
+def parse_itp(f_name):
+    itp = list()
+    lines = load_file(f_name)
+    atoms_flag = 0
+    for line in lines:
+        if atoms_flag and ("[" in line) and ("]" in line):
+            break
+        if atoms_flag and len(line)>0 and line[0]!=";":
+            itp.append(line[1:5])
+        if line==["[","atoms","]"]:
+            atoms_flag = 1 
+    return np.array(itp)
+
+def parse_gro(f_name):
+    lines = load_file(f_name)
+    gro = list()
+    for line in lines[2:-1]:
+        res_id,res_name = re.findall(r'[A-Za-z]+|\d+', line[0])
+        bead_name  = line[1]
+        x, y, z = line[3], line[4], line[5]
+        gro.append([res_id, res_name, bead_name, x, y, z])
+    return np.asarray(gro)
+
+
+class Itp():
+
+    def __init__(self, f_name):
+        self.itp = parse_itp(f_name)
+        self.n_atoms = self.itp.shape[0]
+    
+    @property
+    def beads(self):
+        return self.itp[:, 0]
+
+    @property
+    def top(self):
+        return self.itp[:, 1:]
+    
+class Gro():
+    
+    def __init__(self, f_name):
+        self.gro = parse_gro(f_name)
+        self.n_atoms = self.gro.shape[0] 
+
+    @property
+    def res_ids(self):
+        return self.gro[:, 0].astype(np.int)
+
+    @property
+    def res_names(self):
+        return self.gro[:, 1]
+
+    @property
+    def bead_names(self):
+        return self.gro[:, 2]
+    
+    @property
+    def top(self):
+        return self.gro[:, :3]
+
+    @property
+    def xyz(self):
+        return self.gro[:, 3:].astype(np.float32)
+
+def get_molecule_inds(Gro, Itps):
+    molecules = list()
+    for Itp in Itps:
+        molecule_inds = list()
+        for ind in range(Gro.n_atoms - Itp.n_atoms + 1):
+            if (Gro.top[ind:ind + Itp.n_atoms]==Itp.top).all():
+                molecule_inds.append([ind, ind+Itp.n_atoms])
+        molecules.append(molecule_inds)
+    return np.asarray(molecules)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #________________ final preprocessing script -- Olivia's version of code at end _____________#
 
 # this function loads the .gro file for the system
