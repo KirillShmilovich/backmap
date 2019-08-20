@@ -5,12 +5,18 @@ Unit and regression test for the backmap_pi package.
 # Import package, test suite, and other packages as needed
 import backmap_pi
 import pytest
-import sys
+import os
 
-def test_backmap_pi_imported():
-    line_list = backmap_pi.load("./backmap_pi/tests/after_md_nowater.gro")
+dir_name = os.path.dirname(os.path.abspath(__file__))
 
-def test_molecule_check():
-    """ Should have 96 molecules"""
-    line_list = backmap_pi.load("./backmap_pi/tests/after_md_nowater.gro")
-    assert len(line_list)==2787
+def test_load_file():
+    true_num_lines = 2787
+    path = os.path.join(dir_name, "after_md_nowater.gro")
+    line_list = backmap_pi.utils.load_file(path)
+    assert len(line_list)==true_num_lines
+
+def test_parse_itp():
+    n_lines_ture = 29
+    path = os.path.join(dir_name, "DFAG.itp")
+    itp_lines = backmap_pi.utils.parse_itp(path)
+    assert n_lines_ture == itp_lines.shape[0]

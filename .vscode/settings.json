@@ -1,5 +1,0 @@
-{
-    "python.pythonPath": "/home/kirills/miniconda3/envs/backmap/bin/python",
-    "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true
-}

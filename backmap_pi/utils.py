@@ -36,7 +36,7 @@ def parse_gro(f_name):
     gro = list()
     for line in lines[2:-1]:
         res_id,res_name = re.findall(r'[A-Za-z]+|\d+', line[0])
-        bead_name  = line[1]
+        bead_type  = line[1]
         x, y, z = line[3], line[4], line[5]
-        gro.append([res_id, res_name, bead_name, x, y, z])
+        gro.append([res_id, res_name, bead_type, x, y, z])
     return np.asarray(gro)
