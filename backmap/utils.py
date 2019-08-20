@@ -40,3 +40,12 @@ def parse_gro(f_name):
         x, y, z = line[3], line[4], line[5]
         gro.append([res_id, res_name, bead_type, x, y, z])
     return np.asarray(gro)
+
+def center_of_geometry(xyz):
+    """ input: (N, 3) np array of positions,
+        output: (3,) np array of center of geometry of inputs"""
+    pass 
+
+def parse_xyz(f_name):
+    """ input: .xyz file name
+        output: res_name, bead_names, AA_atoms, AA_xyz"""
