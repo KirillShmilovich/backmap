@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = backmap_pi
+SPHINXPROJ    = backmap
 SOURCEDIR     = .
 BUILDDIR      = _build
 

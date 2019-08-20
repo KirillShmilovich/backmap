@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=backmap_pi
+set SPHINXPROJ=backmap
 
 if "%1" == "" goto help
 

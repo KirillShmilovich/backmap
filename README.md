@@ -1,9 +1,9 @@
-backmap_pi
+backmap
 ==============================
 [//]: # (Badges)
-[![Travis Build Status](https://travis-ci.org/REPLACE_WITH_OWNER_ACCOUNT/backmap_pi.png)](https://travis-ci.org/REPLACE_WITH_OWNER_ACCOUNT/backmap_pi)
-[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/REPLACE_WITH_APPVEYOR_LINK/branch/master?svg=true)](https://ci.appveyor.com/project/REPLACE_WITH_OWNER_ACCOUNT/backmap_pi/branch/master)
-[![codecov](https://codecov.io/gh/REPLACE_WITH_OWNER_ACCOUNT/backmap_pi/branch/master/graph/badge.svg)](https://codecov.io/gh/REPLACE_WITH_OWNER_ACCOUNT/backmap_pi/branch/master)
+[![Travis Build Status](https://travis-ci.org/REPLACE_WITH_OWNER_ACCOUNT/backmap.png)](https://travis-ci.org/REPLACE_WITH_OWNER_ACCOUNT/backmap)
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/REPLACE_WITH_APPVEYOR_LINK/branch/master?svg=true)](https://ci.appveyor.com/project/REPLACE_WITH_OWNER_ACCOUNT/backmap/branch/master)
+[![codecov](https://codecov.io/gh/REPLACE_WITH_OWNER_ACCOUNT/backmap/branch/master/graph/badge.svg)](https://codecov.io/gh/REPLACE_WITH_OWNER_ACCOUNT/backmap/branch/master)
 
 Backmapping for pi-conjugated peptides
 
