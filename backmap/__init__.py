@@ -1,5 +1,5 @@
 """
-backmap_pi
+backmap
 Backmapping for pi-conjugated peptides
 """
 

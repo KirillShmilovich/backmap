@@ -42,7 +42,7 @@ install:
 
 
 script:
-  - pytest -v --cov=backmap_pi backmap_pi/tests/
+  - pytest -v --cov=backmap backmap/tests/
 
 notifications:
     email: false

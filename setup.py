@@ -1,5 +1,5 @@
 """
-backmap_pi
+backmap
 Backmapping for pi-conjugated peptides
 """
 import sys
@@ -21,7 +21,7 @@ except:
 
 setup(
     # Self-descriptive entries which should always be present
-    name='backmap_pi',
+    name='backmap',
     author='Kirill Shmilovich, Olivia Dunne',
     author_email='kirills@uchicago.edu, odunne@uchicago.edu',
     description=short_description[0],
