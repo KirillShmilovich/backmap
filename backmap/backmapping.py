@@ -3,23 +3,29 @@ backmapping.py
 Backmapping for pi-conjugated peptides
 
 Handles the primary functions
+##
+TODO
+----
+-> Find some way to convert gro and itp files to pdb files easily for user
+-> Checker that determins chemical fesability based on graph isomorphims
+-> Think about how to feed in AA information
 """
-from .topology import Gro, Itp, Molecule, Residue
+import mdtraj as md
 from .utils import *
 
 class Backmap():
 
-    def __init__(self, CG_Gro_f_name, CG_Itps_f_name, AA_Itps_f_name):
-        self.CG_Itps = [Itp(f_name) for f_name in CG_Itps_f_name]
-        self.CG_Gro = Gro(f_name = CG_Gro_f_name)
-
-        molecule_inds = get_molecule_inds(self.CG_Gro, self.CG_Itps)
-        self.molecules = list()
-        for molecule_ind, itp in zip(molecule_inds, self.CG_Itps):
-            for inds in molecule_ind:
-                ind = range(*inds)
-                self.molecules.append(Molecule(self.CG_Gro.select_inds(ind), itp))
+    def __init__(self, CG_pdb_f_name, AA_pdbs_f_name):
+        self.CG_trj = md.load_pdb(filename=CG_pdb_f_name).remove_solvent()
+        self.CG_top = self.CG_trj.top
+        self.CG_molecules = np.array([list(mol) for mol in self.CG_top.find_molecules()])
     
     @property
-    def n_molecules(self):
-        return len(self.molecules)
+    def CG_residues(self):
+        residues = np.array(list(self.CG_top.residues))
+        return residues
+    
+    @property
+    def CG_res_names(self):
+        residues = self.CG_residues
+        return np.unique(np.array([res.name for res in residues]))
