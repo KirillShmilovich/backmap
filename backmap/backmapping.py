@@ -15,12 +15,12 @@ from .utils import *
 
 class Backmap():
 
-    def __init__(self, CG_pdb_f_name, AA_pdb_f_names):
+    def __init__(self, CG_pdb_f_name, AA_pdb_f_name):
         self.CG_trj = md.load_pdb(filename=CG_pdb_f_name).remove_solvent()
         self.CG_top = self.CG_trj.top
         self.CG_molecules = np.array([list(mol) for mol in self.CG_top.find_molecules()])
-        self.AA_trj = [md.load_pdb(filename=f_name).remove_solvent() for f_name in AA_pdb_f_names]
-        self.AA_tops = [trj.top for trj in self.AA_trj]
+        self.AA_trj = md.load_pdb(filename=AA_pdb_f_name).remove_solvent()
+        self.AA_top = self.AA_trj.top
     
     @property
     def CG_residues(self):
@@ -31,3 +31,6 @@ class Backmap():
     def CG_res_names(self):
         residues = self.CG_residues
         return np.unique(np.array([res.name for res in residues]))
+
+    def residue_mappings(self):
+        pass
