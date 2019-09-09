@@ -6,13 +6,15 @@ Handles the primary functions
 ##
 TODO
 ----
--> Generalize to arbitrary number of different molecules
+-> Generalize to arbitrary number of different types and number of molecules
 """
 import mdtraj as md
+import numpy as np
 from .utils import *
 
+__all__ = ["Backmapping"]
 
-class Backmap():
+class Backmapping():
 
     def __init__(self, CG_pdb_f_name, AA_pdb_f_name): 
         self.CG_pdb_f_name = CG_pdb_f_name

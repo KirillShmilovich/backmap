@@ -1,6 +1,8 @@
 import numpy as np
 import mdtraj as md
 
+__all__ = ["COM", "index_atom_name", "atom_name_COM", "shift_COM", "index_AA_name"]
+
 def COM(trj, inds):
     return md.compute_center_of_mass(trj.atom_slice(inds))
 
