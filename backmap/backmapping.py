@@ -1,6 +1,6 @@
 """
 backmapping.py
-Backmapping for pi-conjugated peptides
+Backmapping for molecules
 
 Handles the primary functions
 ##
@@ -10,7 +10,8 @@ TODO
 """
 import mdtraj as md
 import numpy as np
-from .utils import *
+from .utils import parse_AA_pdb, parse_CG_pdb
+from .COM_backmap import COM_backmap
 
 __all__ = ["Backmapping"]
 
@@ -25,37 +26,30 @@ class Backmapping():
         self.AA_trj = md.load_pdb(filename=self.AA_pdb_f_name).remove_solvent()
         self.AA_top = self.AA_trj.top
 
-        self.AA_new_trj = md.Trajectory(self.AA_trj.xyz, self.AA_trj.topology) 
-        self.CG_beads = self._parse_CG_pdb(self.CG_pdb_f_name)
-        self.AA_beads = self._parse_AA_pdb(self.AA_pdb_f_name)
+        self.CG_beads = parse_CG_pdb(self.CG_pdb_f_name)
+        self.AA_beads = parse_AA_pdb(self.AA_pdb_f_name)
     
-    def backmap(self, output_f_name = None):
+    def backmap(self, struct_fname, output_f_name = None, mode='COM'):
         if output_f_name is None:
-            self.output_f_name = self.AA_pdb_f_name.split(".")[0] + "_backmapped.pdb"
+            self.output_f_name = struct_fname.split(".")[0] + "_backmapped.pdb"
         else:
             self.output_f_name = output_f_name
-
-        for bead in self.CG_beads:
-            inds = index_AA_name(self.AA_beads, bead)
-            target_com = atom_name_COM(self.CG_trj, bead)
-            shift_COM(self.AA_new_trj, inds, target_com)
         
+        self.CG_struct = md.load(struct_fname)
+
+        if mode=='COM':
+            self.AA_new_trj = COM_backmap(self.CG_struct, self.AA_trj, self.CG_beads, self.AA_beads)
+        else:
+            raise NotImplementedError("Only 'COM' backmapping is supported")
+
+        print(f"Writing output to {self.output_f_name}")
         self.AA_new_trj.save_pdb(self.output_f_name)
+        return self.AA_new_trj
 
-    def _parse_CG_pdb(self, CG_pdb_f_name):
-        CG_bead = list()
-        with open(CG_pdb_f_name) as f:
-            for line in f:
-                split_line = line.split()
-                if (split_line[0] == "HETATM") or (split_line[0] == "ATOM"):
-                    CG_bead.append(split_line[2])
-        return np.array(CG_bead)
-
-    def _parse_AA_pdb(self, AA_pdb_f_name):
-        AA_bead = list()
-        with open(AA_pdb_f_name) as f:
-            for line in f:
-                split_line = line.split()
-                if (split_line[0] == "HETATM") or (split_line[0] == "ATOM"):
-                    AA_bead.append(split_line[-1])
-        return np.array(AA_bead)
+if __name__ == "__main__": 
+    base_path = "/Users/kirills/Projects/backmap/backmap/tests/systems/"
+    AA_map_fname = base_path + "MOL_GMX.pdb"
+    CG_map_fname = base_path + "DFAG_CG_map.pdb"
+    CG = base_path + "DFAG_CG_5.pdb"
+    B = Backmapping(CG_map_fname, AA_map_fname)
+    B.backmap(CG)

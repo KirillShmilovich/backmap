@@ -1,10 +1,7 @@
 ; MOL_GMX.top created by acpype (Rev: 0) on Wed Aug 21 16:07:53 2019
 
-[ defaults ]
-; nbfunc        comb-rule       gen-pairs       fudgeLJ fudgeQQ
-1               2               yes             0.5     0.8333
-
 ; Include MOL_GMX.itp topology
+#include "amber99sb-ildn.ff/forcefield.itp"
 #include "MOL_GMX.itp"
 
 [ system ]
@@ -12,4 +9,4 @@
 
 [ molecules ]
 ; Compound        nmols
- MOL              1     
+ MOL              5     
