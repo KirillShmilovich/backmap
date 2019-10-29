@@ -5,7 +5,7 @@ Backmapping for pi-conjugated peptides
 
 # Add imports here
 from .backmapping import *
-from .topology import *
+from .optimize import *
 
 # Handle versioneer
 from ._version import get_versions

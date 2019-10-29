@@ -1,51 +1,38 @@
 import numpy as np
-import re
+import mdtraj as md
 
-def get_molecule_inds(Gro, Itps):
-    molecules = list()
-    for Itp in Itps:
-        molecule_inds = list()
-        for ind in range(Gro.n_atoms - Itp.n_atoms + 1):
-            if (Gro.top[ind:ind + Itp.n_atoms]==Itp.top).all():
-                molecule_inds.append([ind, ind+Itp.n_atoms])
-        molecules.append(molecule_inds)
-    return np.asarray(molecules)
+__all__ = ["COM", "index_atom_name", "atom_name_COM", "shift_COM", "index_AA_name", "parse_CG_pdb", "parse_AA_pdb"]
 
-def load_file(f_name):
-    line_list = list()
-    with open(f_name) as f:
+def COM(trj, inds):
+    return md.compute_center_of_mass(trj.atom_slice(inds))
+
+def index_atom_name(trj, name):
+    return np.where(name == np.array([atom.name for atom in trj.top.atoms]))[0]
+
+def atom_name_COM(trj, name):
+    inds = index_atom_name(trj, name)
+    return COM(trj, inds)
+
+def shift_COM(trj, inds, target_com):
+    trj.xyz[:, inds] += target_com - COM(trj, inds)
+
+def index_name(bead_array, name):
+    return np.where(name == bead_array)[0]
+
+def parse_CG_pdb(CG_pdb_f_name):
+    CG_bead = list()
+    with open(CG_pdb_f_name) as f:
         for line in f:
-            line_list.append(line.split())
-    return line_list
+            split_line = line.split()
+            if (split_line[0] == "HETATM") or (split_line[0] == "ATOM"):
+                CG_bead.append(split_line[-1])
+    return np.array(CG_bead)
 
-def parse_itp(f_name):
-    itp = list()
-    lines = load_file(f_name)
-    atoms_flag = 0
-    for line in lines:
-        if atoms_flag and ("[" in line) and ("]" in line):
-            break
-        if atoms_flag and len(line)>0 and line[0]!=";":
-            itp.append(line[1:5])
-        if line==["[","atoms","]"]:
-            atoms_flag = 1 
-    return np.array(itp)
-
-def parse_gro(f_name):
-    lines = load_file(f_name)
-    gro = list()
-    for line in lines[2:-1]:
-        res_id,res_name = re.findall(r'[A-Za-z]+|\d+', line[0])
-        bead_type  = line[1]
-        x, y, z = line[3], line[4], line[5]
-        gro.append([res_id, res_name, bead_type, x, y, z])
-    return np.asarray(gro)
-
-def center_of_geometry(xyz):
-    """ input: (N, 3) np array of positions,
-        output: (3,) np array of center of geometry of inputs"""
-    pass 
-
-def parse_xyz(f_name):
-    """ input: .xyz file name
-        output: res_name, bead_names, AA_atoms, AA_xyz"""
+def parse_AA_pdb(AA_pdb_f_name):
+    AA_bead = list()
+    with open(AA_pdb_f_name) as f:
+        for line in f:
+            split_line = line.split()
+            if (split_line[0] == "HETATM") or (split_line[0] == "ATOM"):
+                AA_bead.append(split_line[-1])
+    return np.array(AA_bead)

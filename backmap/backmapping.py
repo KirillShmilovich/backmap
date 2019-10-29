@@ -1,25 +1,47 @@
 """
 backmapping.py
-Backmapping for pi-conjugated peptides
+Backmapping for molecules
 
 Handles the primary functions
+##
+TODO
+----
+-> Generalize to arbitrary number of different types and number of molecules
 """
-from .topology import Gro, Itp, Molecule, Residue
-from .utils import *
+import mdtraj as md
+import numpy as np
+from .utils import parse_AA_pdb, parse_CG_pdb
+from .COM_backmap import COM_backmap
 
-class Backmap():
+__all__ = ["Backmapping"]
 
-    def __init__(self, CG_Gro_f_name, CG_Itps_f_name, AA_Itps_f_name):
-        self.CG_Itps = [Itp(f_name) for f_name in CG_Itps_f_name]
-        self.CG_Gro = Gro(f_name = CG_Gro_f_name)
+class Backmapping():
 
-        molecule_inds = get_molecule_inds(self.CG_Gro, self.CG_Itps)
-        self.molecules = list()
-        for molecule_ind, itp in zip(molecule_inds, self.CG_Itps):
-            for inds in molecule_ind:
-                ind = range(*inds)
-                self.molecules.append(Molecule(self.CG_Gro.select_inds(ind), itp))
+    def __init__(self, CG_pdb_f_name, AA_pdb_f_name): 
+        self.CG_pdb_f_name = CG_pdb_f_name
+        self.AA_pdb_f_name = AA_pdb_f_name
+
+        self.CG_trj = md.load_pdb(filename=self.CG_pdb_f_name).remove_solvent()
+        self.CG_top = self.CG_trj.top
+        self.AA_trj = md.load_pdb(filename=self.AA_pdb_f_name).remove_solvent()
+        self.AA_top = self.AA_trj.top
+
+        self.CG_beads = parse_CG_pdb(self.CG_pdb_f_name)
+        self.AA_beads = parse_AA_pdb(self.AA_pdb_f_name)
     
-    @property
-    def n_molecules(self):
-        return len(self.molecules)
+    def backmap(self, struct_fname, output_f_name = None, mode='COM'):
+        if output_f_name is None:
+            self.output_f_name = struct_fname.split(".")[0] + "_backmapped.pdb"
+        else:
+            self.output_f_name = output_f_name
+        
+        self.CG_struct = md.load(struct_fname)
+
+        if mode=='COM':
+            self.AA_new_trj = COM_backmap(self.CG_struct, self.AA_trj, self.CG_beads, self.AA_beads)
+        else:
+            raise NotImplementedError("Only 'COM' backmapping is supported")
+
+        print(f"Writing output to {self.output_f_name}")
+        self.AA_new_trj.save_pdb(self.output_f_name)
+        return self.AA_new_trj

@@ -1,0 +1,130 @@
+TITLE     Martini system from dfag.gro
+REMARK    THIS IS A SIMULATION BOX
+CRYST1  163.605  163.605  163.605  90.00  90.00  90.00 P 1           1
+MODEL        1
+ATOM      1  BB  PAS A   1     102.020  16.580 129.570  1.00  0.00            
+ATOM      2  SC1 PAS A   1      99.030  16.940 129.430  1.00  0.00            
+ATOM      3  BB  PHE A   2     103.120  19.140 131.080  1.00  0.00            
+ATOM      4  SC1 PHE A   2     105.040  19.210 133.400  1.00  0.00            
+ATOM      5  SC2 PHE A   2     107.470  18.140 133.910  1.00  0.00            
+ATOM      6  SC3 PHE A   2     106.630  20.310 135.290  1.00  0.00            
+ATOM      7  BB  ALA A   3     102.530  22.460 131.440  1.00  0.00            
+ATOM      8  BB  GLY A   4     100.920  24.440 129.820  1.00  0.00            
+ATOM      9  BB  COA A   5     101.160  25.080 127.170  1.00  0.00            
+ATOM     10  BB  COP A   6     102.550  26.600 125.840  1.00  0.00            
+ATOM     11  SC1 COP A   6     102.600  28.440 124.690  1.00  0.00            
+ATOM     12  BB  COP A   6     104.000  26.830 124.350  1.00  0.00            
+ATOM     13  BB  VIN A   7     105.980  26.630 123.390  1.00  0.00            
+ATOM     14  BB  BEN A   8     108.200  26.430 122.470  1.00  0.00            
+ATOM     15  SC1 BEN A   8     109.120  25.680 120.640  1.00  0.00            
+ATOM     16  BB  BEN A   8     110.140  25.630 122.560  1.00  0.00            
+ATOM     17  BB  VIN A   9     112.350  25.610 123.420  1.00  0.00            
+ATOM     18  BB  COP A  10     115.510  24.330 126.190  1.00  0.00            
+ATOM     19  SC1 COP A  10     114.270  25.760 127.240  1.00  0.00            
+ATOM     20  BB  COP A  10     113.960  25.270 125.150  1.00  0.00            
+ATOM     21  BB  COA A  11     117.010  22.420 126.480  1.00  0.00            
+ATOM     22  BB  GLY A  12     118.920  21.570 127.890  1.00  0.00            
+ATOM     23  BB  ALA A  13     118.920  20.090 130.690  1.00  0.00            
+ATOM     24  BB  PHE A  14     116.930  19.120 131.910  1.00  0.00            
+ATOM     25  SC1 PHE A  14     116.490  19.280 135.000  1.00  0.00            
+ATOM     26  SC2 PHE A  14     114.990  20.070 137.110  1.00  0.00            
+ATOM     27  SC3 PHE A  14     117.280  18.700 137.520  1.00  0.00            
+ATOM     28  BB  PAS A  15     117.120  14.940 132.670  1.00  0.00            
+ATOM     29  SC1 PAS A  15     119.870  14.410 131.830  1.00  0.00            
+ATOM     30  BB  PAS B   1      75.320  26.710  97.350  1.00  0.00            
+ATOM     31  SC1 PAS B   1      75.410  29.530  97.850  1.00  0.00            
+ATOM     32  BB  PHE B   2      77.230  24.360  98.690  1.00  0.00            
+ATOM     33  SC1 PHE B   2      79.600  22.670  97.750  1.00  0.00            
+ATOM     34  SC2 PHE B   2      81.220  20.610  97.100  1.00  0.00            
+ATOM     35  SC3 PHE B   2      81.250  22.870  95.620  1.00  0.00            
+ATOM     36  BB  ALA B   3      77.620  24.800 101.500  1.00  0.00            
+ATOM     37  BB  GLY B   4      77.400  24.060 103.580  1.00  0.00            
+ATOM     38  BB  COA B   5      76.920  24.610 106.330  1.00  0.00            
+ATOM     39  BB  COP B   6      78.590  25.100 108.000  1.00  0.00            
+ATOM     40  SC1 COP B   6      79.290  26.430 109.560  1.00  0.00            
+ATOM     41  BB  COP B   6      80.120  24.450 109.260  1.00  0.00            
+ATOM     42  BB  VIN B   7      81.690  22.970 110.100  1.00  0.00            
+ATOM     43  BB  BEN B   8      82.430  21.180 111.240  1.00  0.00            
+ATOM     44  SC1 BEN B   8      82.620  19.030 110.960  1.00  0.00            
+ATOM     45  BB  BEN B   8      83.220  20.030 112.800  1.00  0.00            
+ATOM     46  BB  VIN B   9      84.570  19.620 114.750  1.00  0.00            
+ATOM     47  BB  COP B  10      87.920  18.860 117.540  1.00  0.00            
+ATOM     48  SC1 COP B  10      86.300  17.560 118.150  1.00  0.00            
+ATOM     49  BB  COP B  10      86.150  18.870 116.430  1.00  0.00            
+ATOM     50  BB  COA B  11      90.150  19.770 117.770  1.00  0.00            
+ATOM     51  BB  GLY B  12      92.870  19.850 116.680  1.00  0.00            
+ATOM     52  BB  ALA B  13      94.770  21.140 115.830  1.00  0.00            
+ATOM     53  BB  PHE B  14      94.560  24.300 115.970  1.00  0.00            
+ATOM     54  SC1 PHE B  14      97.600  24.800 116.530  1.00  0.00            
+ATOM     55  SC2 PHE B  14      99.730  24.420 118.130  1.00  0.00            
+ATOM     56  SC3 PHE B  14      99.690  26.490 116.400  1.00  0.00            
+ATOM     57  BB  PAS B  15      92.000  25.430 116.600  1.00  0.00            
+ATOM     58  SC1 PAS B  15      91.160  27.960 117.200  1.00  0.00            
+TER
+ENDMDL
+CONECT    1    3
+CONECT    1    2
+CONECT    8    9
+CONECT   21   22
+CONECT   22   23
+CONECT   23   24
+CONECT   24   25
+CONECT   24   28
+CONECT   28   29
+CONECT    3    7
+CONECT    3    4
+CONECT    7    8
+CONECT   30   32
+CONECT   30   31
+CONECT   37   38
+CONECT   50   51
+CONECT   51   52
+CONECT   52   53
+CONECT   53   54
+CONECT   53   57
+CONECT   57   58
+CONECT   32   36
+CONECT   32   33
+CONECT   36   37
+CONECT    9   10
+CONECT   12   13
+CONECT   13   14
+CONECT   16   17
+CONECT   17   20
+CONECT   21   18
+CONECT   38   39
+CONECT   41   42
+CONECT   42   43
+CONECT   45   46
+CONECT   46   49
+CONECT   50   47
+CONECT   25   26
+CONECT   25   27
+CONECT   26   27
+CONECT    4    5
+CONECT    4    6
+CONECT    5    6
+CONECT   10   12
+CONECT   10   11
+CONECT   11   12
+CONECT   14   16
+CONECT   15   16
+CONECT   14   15
+CONECT   18   20
+CONECT   18   19
+CONECT   19   20
+CONECT   54   55
+CONECT   54   56
+CONECT   55   56
+CONECT   33   34
+CONECT   33   35
+CONECT   34   35
+CONECT   39   41
+CONECT   39   40
+CONECT   40   41
+CONECT   43   45
+CONECT   44   45
+CONECT   43   44
+CONECT   47   49
+CONECT   47   48
+CONECT   48   49
