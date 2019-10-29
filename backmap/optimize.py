@@ -39,9 +39,12 @@ class EnergyMinimization():
     def minimize(self, max_iter=10000):
         self.simulation.minimizeEnergy(maxIterations=max_iter) 
 
-    def optimize(self, output_f_name="EM.pdb"):
+    def optimize(self, output_f_name="EM.pdb", max_iter=None):
         self.create_sim()
         print("Performing Local Energy Minimization")
-        self.minimize()
+        if max_iter is not None:
+            self.minimize()
+        else:
+            self.minimize(max_iter)
         print(f"Writing output to {output_f_name}")
         self.write_pdb(output_f_name)

@@ -45,11 +45,3 @@ class Backmapping():
         print(f"Writing output to {self.output_f_name}")
         self.AA_new_trj.save_pdb(self.output_f_name)
         return self.AA_new_trj
-
-if __name__ == "__main__": 
-    base_path = "/Users/kirills/Projects/backmap/backmap/tests/systems/"
-    AA_map_fname = base_path + "MOL_GMX.pdb"
-    CG_map_fname = base_path + "DFAG_CG_map.pdb"
-    CG = base_path + "DFAG_CG_5.pdb"
-    B = Backmapping(CG_map_fname, AA_map_fname)
-    B.backmap(CG)
