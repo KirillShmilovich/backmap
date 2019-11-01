@@ -15,9 +15,9 @@ from .COM_backmap import COM_backmap
 
 __all__ = ["Backmapping"]
 
-class Backmapping():
 
-    def __init__(self, CG_pdb_f_name, AA_pdb_f_name): 
+class Backmapping():
+    def __init__(self, CG_pdb_f_name, AA_pdb_f_name):
         self.CG_pdb_f_name = CG_pdb_f_name
         self.AA_pdb_f_name = AA_pdb_f_name
 
@@ -28,16 +28,16 @@ class Backmapping():
 
         self.CG_beads = parse_CG_pdb(self.CG_pdb_f_name)
         self.AA_beads = parse_AA_pdb(self.AA_pdb_f_name)
-    
-    def backmap(self, struct_fname, output_f_name = None, mode='COM'):
+
+    def backmap(self, struct_fname, output_f_name=None, mode='COM'):
         if output_f_name is None:
             self.output_f_name = struct_fname.split(".")[0] + "_backmapped.pdb"
         else:
             self.output_f_name = output_f_name
-        
+
         self.CG_struct = md.load(struct_fname)
 
-        if mode=='COM':
+        if mode == 'COM':
             self.AA_new_trj = COM_backmap(self.CG_struct, self.AA_trj, self.CG_beads, self.AA_beads)
         else:
             raise NotImplementedError("Only 'COM' backmapping is supported")
