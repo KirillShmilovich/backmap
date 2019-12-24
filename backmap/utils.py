@@ -1,7 +1,14 @@
-import numpy as np
 import mdtraj as md
+import numpy as np
 
-__all__ = ["COM", "index_atom_name", "atom_name_COM", "shift_COM", "parse_CG_pdb", "parse_AA_pdb"]
+__all__ = [
+    "COM",
+    "index_atom_name",
+    "atom_name_COM",
+    "shift_COM",
+    "parse_CG_pdb",
+    "parse_AA_pdb",
+]
 
 
 def COM(trj, inds):
