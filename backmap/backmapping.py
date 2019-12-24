@@ -12,12 +12,16 @@ import mdtraj as md
 
 from .COM_backmap import COM_backmap
 from .utils import parse_AA_pdb, parse_CG_pdb
+from .structure import Structure
 
 __all__ = ["Backmapping"]
 
 
 class Backmapping:
     def __init__(self, CG_pdb_f_name, AA_pdb_f_name):
+        self.AA = Structure(AA_pdb_f_name, resolution="AA")
+        self.CG = Structure(CG_pdb_f_name, resolution="CG")
+
         self.CG_pdb_f_name = CG_pdb_f_name
         self.AA_pdb_f_name = AA_pdb_f_name
 
@@ -39,7 +43,7 @@ class Backmapping:
 
         if mode == "COM":
             self.AA_new_trj = COM_backmap(
-                self.CG_struct, self.AA_trj, self.CG_beads, self.AA_beads
+                self.CG_struct, self.AA.trj, self.CG.beads, self.AA.beads
             )
         else:
             raise NotImplementedError("Only 'COM' backmapping is supported")
