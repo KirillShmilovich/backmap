@@ -20,22 +20,21 @@ class Backmapping:
     def __init__(self, CG_pdb_fname, FG_pdb_fname):
         self.map = Map(FG_pdb_fname, CG_pdb_fname)
 
-    def backmap(self, struct_fname, output_f_name=None, mode="COM"):
-        if output_f_name is None:
-            self.output_f_name = struct_fname.split(".")[0] + "_backmapped.pdb"
+    def backmap(self, to_back_fname, output_fname=None, mode="COM"):
+        if output_fname is None:
+            self.output_fname = to_back_fname.split(".")[0] + "_backmapped.pdb"
         else:
-            self.output_f_name = output_f_name
+            self.output_fname = output_fname
 
-        self.CG_struct = md.load(struct_fname).remove_solvent()
-        ## TODO: split CG struct into different moleules
+        self.CG_to_back = md.load(filename=to_back_fname).remove_solvent()
+        # TODO: split CG struct into different moleules
 
         if mode == "COM":
-            self.AA_new_trj = COM_backmap(
-                self.CG_struct, self.AA.trj, self.CG.beads, self.AA.beads
-            )
+            self.Backmap = COM_backmap(self.CG_to_back, self.map)
+            self.FG_back_trj = self.Backmap.FG_back_trj
         else:
             raise NotImplementedError("Only 'COM' backmapping is supported")
 
         print(f"Writing output to {self.output_f_name}")
-        self.AA_new_trj.save_pdb(self.output_f_name)
-        return self.AA_new_trj
+        self.FG_back.save_pdb(self.output_f_name)
+        return self.AA_back_trj

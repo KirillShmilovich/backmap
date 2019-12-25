@@ -5,6 +5,8 @@ COM replacement backmapping
 ##
 """
 import numpy as np
+import mdtraj as md
+from .utils import rigid_transform, join_trjs
 
 __all__ = ["COM_backmap"]
 
@@ -20,15 +22,30 @@ class COM_backmap:
         """Extracts arrays of trajectory objects for each molecule"""
         self.molecules = list()
         for mol in self.CG_to_back.top.find_molecules():
-            idxs = [atom.index for atom in mol]
+            idxs = [atom.index for atom in list(mol)]
             self.molecules.append(self.CG_to_back.atom_slice(idxs))
         self.n_molecules = len(self.molecules)
-        self.molecules = np.array(self.molecules)
 
     def backmap(self, n=3):
-        """Backmap, aligning every 3 beads"""
-        for mol in self.molecules:
-            pass
+        """Backmap, aligning (around) every 3 beads"""
+        for i, mol in enumerate(self.molecules):
+            FG_back_xyz = np.zeros_like(self.Map.FG_trj.xyz)
+            FG_back_top = self.Map.top.copy()
+            for beads in np.array_split(np.arange(mol.n_atoms), mol.n_atoms // n):
+                A = mol.atom_slice(beads).xyz
+                B = self.Map.CG_trj.atom_slice(beads).xyz
+
+                R, t = rigid_transform(A, B)
+
+                FG_beads_xyz, FG_beads_idx = self.Map.get_FG_xyz(beads)
+                FG_back_xyz[:, FG_beads_idx] = FG_beads_xyz @ R + t
+            if i == 0:
+                FG_back_trj = md.Trajectory(FG_back_xyz, FG_back_top)
+            else:
+                new_trj = md.Trajectory(FG_back_xyz, FG_back_top)
+                FG_back_trj = join_trjs(FG_back_trj, new_trj)
+        self.FG_back_trj = FG_back_trj
+        return self.FG_back_trj
 
 
 # def COM_backmap(CG_struct, AA_trj, CG_bead, AA_bead):
