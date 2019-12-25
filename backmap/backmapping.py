@@ -27,6 +27,7 @@ class Backmapping:
             self.output_f_name = output_f_name
 
         self.CG_struct = md.load(struct_fname).remove_solvent()
+        ## TODO: split CG struct into different moleules
 
         if mode == "COM":
             self.AA_new_trj = COM_backmap(
