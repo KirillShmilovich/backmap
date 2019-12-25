@@ -33,6 +33,10 @@ class Map:
     def FG_top(self):
         return self.FG_trj.top
 
+    def get_FG_xyz(self, beads):
+        """Returns the FG coords and indicies (xyz, idx) corresponding to 'beads'"""
+        pass
+
     def _parse(self):
         self.FG_beads = parse_pdb(self.FG_fname)
         self.CG_beads = parse_pdb(self.CG_fname)
