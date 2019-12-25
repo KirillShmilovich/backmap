@@ -11,27 +11,14 @@ TODO
 import mdtraj as md
 
 from .COM_backmap import COM_backmap
-from .utils import parse_AA_pdb, parse_CG_pdb
-from .structure import Structure
+from .map import Map
 
 __all__ = ["Backmapping"]
 
 
 class Backmapping:
-    def __init__(self, CG_pdb_f_name, AA_pdb_f_name):
-        self.AA = Structure(AA_pdb_f_name, resolution="AA")
-        self.CG = Structure(CG_pdb_f_name, resolution="CG")
-
-        self.CG_pdb_f_name = CG_pdb_f_name
-        self.AA_pdb_f_name = AA_pdb_f_name
-
-        self.CG_trj = md.load_pdb(filename=self.CG_pdb_f_name).remove_solvent()
-        self.CG_top = self.CG_trj.top
-        self.AA_trj = md.load_pdb(filename=self.AA_pdb_f_name).remove_solvent()
-        self.AA_top = self.AA_trj.top
-
-        self.CG_beads = parse_CG_pdb(self.CG_pdb_f_name)
-        self.AA_beads = parse_AA_pdb(self.AA_pdb_f_name)
+    def __init__(self, CG_pdb_fname, FG_pdb_fname):
+        self.map = Map(FG_pdb_fname, CG_pdb_fname)
 
     def backmap(self, struct_fname, output_f_name=None, mode="COM"):
         if output_f_name is None:
@@ -39,7 +26,7 @@ class Backmapping:
         else:
             self.output_f_name = output_f_name
 
-        self.CG_struct = md.load(struct_fname)
+        self.CG_struct = md.load(struct_fname).remove_solvent()
 
         if mode == "COM":
             self.AA_new_trj = COM_backmap(
