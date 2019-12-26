@@ -4,8 +4,8 @@ Backmapping for pi-conjugated peptides
 """
 
 # Add imports here
-from .backmapping import Backmapping
-from .optimize import EnergyMinimization
+from backmap.backmapping import Backmapping
+from backmap.optimize import EnergyMinimization
 
 # Handle versioneer
 from ._version import get_versions
