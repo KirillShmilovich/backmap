@@ -4,10 +4,10 @@ import mdtraj as md
 __all__ = ["parse_pdb", "join_trjs", "rigid_transform", "get_beads"]
 
 
-def parse_pdb(pdb_f_name):
+def parse_pdb(pdb_fname):
     """Parses PDB file"""
     bead = list()
-    with open(pdb_f_name) as f:
+    with open(pdb_fname) as f:
         for line in f:
             split_line = line.split()
             if (split_line[0] == "HETATM") or (split_line[0] == "ATOM"):

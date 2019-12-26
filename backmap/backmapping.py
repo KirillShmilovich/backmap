@@ -48,7 +48,7 @@ if __name__ == "__main__":
     import backmap
 
     B = backmap.Backmapping(
-        "tests/systems/DFAG_CG_MAP_new.pdb",
+        "tests/systems/DFAG_CG_MAP.pdb",
         "tests/systems/MOL_GMX.pdb",
         "tests/systems/MOL_GMX.top",
     )
