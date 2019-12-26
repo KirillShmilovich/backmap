@@ -59,4 +59,3 @@ class Map:
             self.CG_trj.xyz[:, i] = md.compute_center_of_mass(
                 self.FG_trj.atom_slice(FG_idxs)
             )
-
