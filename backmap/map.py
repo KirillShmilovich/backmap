@@ -8,7 +8,8 @@ TODO
 
 import mdtraj as md
 import numpy as np
-from .utils import parse_pdb
+from backmap.utils import parse_pdb
+from collections.abc import Iterable
 
 __all__ = ["Map"]
 
@@ -33,21 +34,29 @@ class Map:
     def FG_top(self):
         return self.FG_trj.top
 
-    def get_FG_xyz(self, beads):
+    def get_FG_coords(self, beads):
         """Returns the FG coords and indicies (xyz, idx) corresponding to 'beads'"""
-        pass
+        if isinstance(beads, Iterable):
+            FG_idx = np.concatenate([self.idx_mapping[i] for i in beads])
+        else:
+            FG_idx = self.idx_mapping[beads]
+        FG_xyz = self.FG_trj.xyz[:, FG_idx]
+        return FG_xyz, FG_idx
 
     def _parse(self):
         self.FG_beads = parse_pdb(self.FG_fname)
         self.CG_beads = parse_pdb(self.CG_fname)
 
     def _create_mapping(self):
-        self.mapping = dict()
-        for bead in self.CG_beads:
-            self.mapping[bead] = np.where(self.FG_beads == bead)[0]
+        self.bead_mapping = dict()
+        self.idx_mapping = dict()
+        for i, bead in enumerate(self.CG_beads):
+            self.bead_mapping[bead] = np.where(self.FG_beads == bead)[0]
+            self.idx_mapping[i] = self.bead_mapping[bead]
 
     def _align(self):
-        for i, FG_idxs in enumerate(self.mapping.values()):
+        for i, FG_idxs in enumerate(self.bead_mapping.values()):
             self.CG_trj.xyz[:, i] = md.compute_center_of_mass(
                 self.FG_trj.atom_slice(FG_idxs)
             )
+

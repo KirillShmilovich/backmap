@@ -14,9 +14,9 @@ __all__ = ["EnergyMinimization"]
 
 
 class EnergyMinimization:
-    def __init__(self, trj, top_f_name):
+    def __init__(self, trj, top_fname):
         self.trj = trj
-        self.top = load_file(top_f_name)
+        self.top = load_file(top_fname)
 
     def create_sim(self):
         self.system = self.top.createSystem(
@@ -28,22 +28,28 @@ class EnergyMinimization:
         )
         self.simulation.context.setPositions(self.trj.openmm_positions(0))
 
-    def get_energy(self):
+    @property
+    def energy(self):
         return self.simulation.context.getState(getEnergy=True).getPotentialEnergy()
 
-    def write_pdb(self, f_name):
+    def write_pdb(self, fname):
         positions = self.simulation.context.getState(getPositions=True).getPositions()
-        app.PDBFile.writeFile(self.simulation.topology, positions, open(f_name, "w"))
+        app.PDBFile.writeFile(self.simulation.topology, positions, open(fname, "w"))
 
-    def minimize(self, max_iter=10000):
-        self.simulation.minimizeEnergy(maxIterations=max_iter)
+    def update_trj(self):
+        positions = self.simulation.context.getState(getPositions=True).getPositions(
+            asNumpy=True
+        )
+        positions = positions / unit.nanometer
+        self.trj.xyz[0] = positions
 
-    def optimize(self, output_f_name="EM.pdb", max_iter=None):
+    def minimize(self):
+        print(f"Energy prior to minimization: {self.energy}")
+        self.simulation.minimizeEnergy()
+        print(f"Energy after minimization: {self.energy}")
+
+    def optimize(self):
         self.create_sim()
         print("Performing Local Energy Minimization")
-        if max_iter is not None:
-            self.minimize()
-        else:
-            self.minimize(max_iter)
-        print(f"Writing output to {output_f_name}")
-        self.write_pdb(output_f_name)
+        self.minimize()
+        self.update_trj()
